@@ -12,7 +12,7 @@
    plugins: [
      new HtmlWebpackPlugin({
        title: 'Production',
-       template: 'template.html'
+       template: './src/template.html'
      }),
    ],
    module: {

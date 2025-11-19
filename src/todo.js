@@ -1,0 +1,46 @@
+export class ToDo { 
+    constructor(name, description, due, priority) {
+        this.name = name;
+        this.description = description;
+        this.due = due;
+        this.priority = priority;
+    }
+}
+
+export class Checklist {
+    constructor(name, description, due, priority) {
+        this.name = name;
+        this.description = description;
+        this.due = due;
+        this.priority = priority;
+        this.list = [];
+    }
+
+    addToList (item) {
+        this.list.push(item)
+    }
+}
+
+export class Project {
+    constructor(title) {
+        this.title = title;
+        this.body = [];
+    }
+
+    addToDo() {
+        let toDo = new ToDo()
+        this.body.push(toDo)
+    }
+
+    addChecklist() {
+        let toDo = new ToDo()
+        this.body.push(toDo)
+    }
+}
+
+
+const toDoList = new Project("To-Do")
+const doingList = new Project("Doing")
+const doneList = new Project("Done")
+
+export const initialProjects = [toDoList, doingList, doneList]
