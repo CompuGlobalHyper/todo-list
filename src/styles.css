@@ -65,6 +65,7 @@ header {
     border-radius: 50%;
     width: 50px;
     height: 50px;
+    margin: clamp(8px, 1.5vw, 32px);
 }
 
 #title {
@@ -86,6 +87,7 @@ header {
 nav {
     border: 1px solid black;
     padding: clamp(8px, 1.5vw, 32px);
+    cursor: pointer;
 }
 
 #container {
@@ -101,6 +103,10 @@ nav {
     min-width: 75dvw;
     min-height: 40dvh;
 
+}
+
+.project-title {
+    padding: clamp(8px, 1.5vw, 32px);
 }
 
 
@@ -129,4 +135,87 @@ nav {
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
+}
+
+.to-do-bubble {
+    border: 1px solid black;
+    padding: clamp(8px, 1.5vw, 32px);
+    margin: clamp(8px, 1.5vw, 32px);
+
+}
+
+.item-wrapper {
+    padding: clamp(8px, 1.5vw, 32px);
+}
+
+
+#to-do-dialog[open] {
+    position: relative;
+    min-width: 300px;
+    min-height: 300px;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(8px, 1.5vw, 32px);
+    padding: clamp(8px, 1.5vw, 32px);
+
+}
+
+.dialog-wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: clamp(8px, 1.5vw, 32px);
+    width: 100%;
+}
+
+#priority-wrapper {
+    display: flex;
+    justify-content: left;
+    gap: 5vw;
+    width: 100%;
+    align-items: center;
+}
+
+#close-button, #add-button, #priority-box {
+    border: 2px solid black;
+}
+
+#close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 50%;
+    padding: clamp(4px, 1vw, 24px);
+
+}
+
+#add-button {
+    padding: 4px 8px;
+    cursor: pointer;
+    
+}
+
+#priority-box {
+    padding: clamp(8px, 2vw, 16px);
+    cursor: pointer;
+}
+
+#details-label {
+    margin-right: auto;
+    margin-top: 4vh;
+}
+textarea {
+    height: 80px;
+    width: 200px
+}
+
+@media (min-width: 1000px) {
+    #to-do-dialog[open] {
+        min-width: 400px;
+        min-height: 400px;
+    }
 }

@@ -43,4 +43,8 @@ const toDoList = new Project("To-Do")
 const doingList = new Project("Doing")
 const doneList = new Project("Done")
 
+const test = new ToDo ('Make an app', 'This is a test', 'Christmas', true)
+toDoList.body.push(test)
+console.log(toDoList.body)
+
 export const initialProjects = [toDoList, doingList, doneList]
