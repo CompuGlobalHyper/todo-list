@@ -3,18 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <title>A Big To-Do</title>
+    
 </head>
 <body>
     <header>
-        <div id="title-bar">
-            <div id="user"></div>
-            <div id="title"><h1>a big to-do</h1></div>
-        </div>
-        <div id="nav-bar">
-            <nav>Home</nav>
-            <nav>Lists</nav>
-            <nav>Backlog</nav>
+        <div class="sidebar">
+            <div id="title-bar">
+                <div class="image-text">
+                    <span class="image"><i class='bx bxs-food-menu'></i></span>
+                </div>
+                <div class="title-text">
+                    <span id="a-big">a big</span>
+                    <span id="to-do">to-do</span>
+                </div>
+                <i class='bx bx-chevron-right toggle'></i>
+            </div>
+            <div id="nav-bar">
+                <div class="add-task">
+                    <i class='bx bx-plus' ></i>
+                    <span>Add new to-do</span>
+                </div>
+                <div class="menu-list">
+                    <div class="list-wrapper">
+                        <i class='bx bx-list-ul' ></i>
+                        <div class="list-item">All To-Dos</div>
+                        <div class="tally">0</div>
+                    </div>
+                    <div class="list-wrapper">
+                        <i class='bx bx-list-ul' ></i>
+                        <div class="list-item">Today</div>
+                        <div class="tally">0</div>
+                    </div>
+                    <div class="list-wrapper">
+                        <i class='bx bx-list-ul' ></i>
+                        <div class="list-item">Backlog</div>
+                        <div class="tally">0</div>
+                    </div>
+                </div>
+                <div class="my-projects">Projects</div>
+                <div class="project-list">
+                    <div class="list-wrapper">
+                        <i class='bx bx-folder' ></i>
+                        <div class="list-item">Sample Project</div>
+                        <div class="tally">0</div>
+                    </div>
+                </div>
+                <div class="add-project">
+                    <i class='bx bx-folder-plus' ></i>
+                    <span>Add new project</span>
+                </div>
+            </div>
+            <div class="dark-mode-wrapper">
+                <i class='bx bxs-moon' ></i>
+                <i class='bx bxs-sun' ></i>
+                <span id="dark-mode-text">Dark mode</span>
+                <span id="light-mode-text"></span>
+                <div id="toggle-wrapper">
+                    <div id="toggle-switch"></div>
+                </div>
+
+            </div>
+            
         </div>
     </header>
     <div id="container"></div>

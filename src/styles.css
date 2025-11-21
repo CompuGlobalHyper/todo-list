@@ -1,3 +1,25 @@
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+/* Styles and Variables*/
+    
+
+:root {
+    --body-color: rgb(239, 236, 255);
+    --sidebar-color: rgb(249, 248, 255);
+    --primary-color: rgb(106, 126, 255);
+    --primary-color-light:rgb(246, 244, 255);
+    --toggle-color: rgb(209, 205, 229);
+    --text-color: rgb(83, 81, 96);
+
+    --trans-02: all 0.2s ease;
+    --trans-03: all 0.3s ease;
+    --trans-04: all 0.4s ease;
+    --trans-05: all 0.5s ease;
+}
+    
+
+
+
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
@@ -30,6 +52,10 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+    font-family: "Quicksand", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    box-sizing: border-box;
 }
 ol, ul {
 	list-style: none;
@@ -47,47 +73,168 @@ table {
 	border-spacing: 0;
 }
 
-header {
-    position: sticky;
+body {
+    background-color: var(--body-color);
+    height: 100dvh;
+}
+
+
+.sidebar {
+    position: fixed;
     top: 0;
-    z-index: 1000;
-    background-color: white;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    padding: 16px;
+    background-color: var(--sidebar-color);
+
 }
 
 #title-bar {
     position: relative;
     display: flex;
     align-items: center;
+    gap: 40px;
 }
 
-#user {
-    border: 1px solid black;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    margin: clamp(8px, 1.5vw, 32px);
+#title-bar .image-text i {
+    font-size: 40px;
+    text-align: center;
+    padding: 10px;
+    color: var(--body-color);
+    background-color: var(--primary-color);
+    border-radius: 6px;
 }
 
-#title {
+#title-bar .title-text {
+    font-size: 32px;
+    color: var(--text-color);
+    font-weight: 900;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#title-bar .toggle {
     position: absolute;
-    font-size: clamp(32px, 3vw, 64px);
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-#nav-bar {
+    top:50%;
+    right: -23px;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 30px;
+    background-color: var(--primary-color);
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: clamp(8px, 1.5vw, 32px);
-    border-bottom: 1px solid black;
-    padding-bottom: clamp(8px, 1.5vw, 32px);
+    border-radius: 50%;
+    color: var(--sidebar-color);
+    font-size: 32px;
 }
 
-nav {
-    border: 1px solid black;
+
+#nav-bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(8px, 1.5vw, 32px);
+    padding-bottom: clamp(8px, 1.5vw, 32px);
+    margin-top: 20px;
+}
+
+
+.menu-list > *, .project-list > *{
+    width: 100%;
+    margin-top: 10px;
+}
+
+.menu-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    
+    
+}
+
+.project-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.add-task, .list-wrapper {
+    height: 36px;
+}
+
+
+.list-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    
+    cursor: pointer;
+}
+
+.add-task, .add-project {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    
+    gap: clamp(8px, 1.5vw, 32px);
     padding: clamp(8px, 1.5vw, 32px);
     cursor: pointer;
+}
+.list-wrapper i {
+    font-size: 24px;
+}
+
+.list-item {
+    font-size: 16px;
+    font-weight: 500;
+    margin-right: auto;
+    margin-left: 12px;
+}
+
+
+.dark-mode-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 50px;
+    background-color: red;
+    width: 100%;
+    margin-top: calc(100% - 100px);
+    cursor: pointer;
+}
+
+.dark-mode-wrapper i {
+    color: aliceblue;
+}
+
+#dark-mode-text {
+    font-size: 24px;
+    font-weight: 500;
+    margin-right: auto;
+    margin-left: 12px;
+}
+
+#toggle-wrapper {
+    position: relative;
+    width: 40px;
+    height: 20px;
+    border-radius: 12px;
+    background-color: blue;
+}
+
+#toggle-switch {
+    position: absolute;
+    top: 20%;
+    left: 5px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: orange;
 }
 
 #container {
@@ -112,17 +259,15 @@ nav {
 
 #sticky-bar {
     position: fixed;
-    bottom: 0;         /* float above bottom */
+    bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 100%;          /* or 100% if you prefer */
+    width: 100%;
     height: 8vh;
     display: flex;
     justify-content: center;
     gap: clamp(8px, 1.5vw, 32px);
-    background: rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(2px);
-    z-index: 1000;
+    
 }
 
 
