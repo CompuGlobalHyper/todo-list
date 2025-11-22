@@ -9,60 +9,67 @@
 </head>
 <body>
     <header>
-        <div class="sidebar">
+        <div class="sidebar close">
             <div id="title-bar">
-                <div class="image-text">
-                    <span class="image"><i class='bx bxs-food-menu'></i></span>
+                <div class="image-text hide">
+                    <span class="image hide"><i class='bx bxs-food-menu hide'></i></span>
                 </div>
                 <div class="title-text">
-                    <span id="a-big">a big</span>
-                    <span id="to-do">to-do</span>
+                    <span class="hide" id="a-big ">a big</span>
+                    <span class="hide" id="to-do">to-do</span>
                 </div>
                 <i class='bx bx-chevron-right toggle'></i>
             </div>
             <div id="nav-bar">
-                <div class="add-task">
-                    <i class='bx bx-plus' ></i>
-                    <span>Add new to-do</span>
+                <div class="list-wrapper hide" id="add-task">
+                    <i class='bx bx-plus hide icon' ></i>
+                    <div class="list-item">Add New To-Do</div>
                 </div>
-                <div class="menu-list">
-                    <div class="list-wrapper">
-                        <i class='bx bx-list-ul' ></i>
+                <div class="menu-list hide">
+                    <div class="list-wrapper hide">
+                        <i class='bx bx-list-ul icon' ></i>
                         <div class="list-item">All To-Dos</div>
                         <div class="tally">0</div>
                     </div>
-                    <div class="list-wrapper">
-                        <i class='bx bx-list-ul' ></i>
+                    <div class="list-wrapper hide">
+                        <i class='bx bx-list-ul icon' ></i>
                         <div class="list-item">Today</div>
                         <div class="tally">0</div>
                     </div>
-                    <div class="list-wrapper">
-                        <i class='bx bx-list-ul' ></i>
+                    <div class="list-wrapper hide">
+                        <i class='bx bx-list-ul icon' ></i>
                         <div class="list-item">Backlog</div>
                         <div class="tally">0</div>
                     </div>
                 </div>
-                <div class="my-projects">Projects</div>
-                <div class="project-list">
-                    <div class="list-wrapper">
-                        <i class='bx bx-folder' ></i>
+                <div class="my-projects hide">Projects</div>
+                <div class="project-list hide">
+                    <div class="list-wrapper hide">
+                        <i class='bx bx-folder icon' ></i>
                         <div class="list-item">Sample Project</div>
                         <div class="tally">0</div>
                     </div>
                 </div>
-                <div class="add-project">
-                    <i class='bx bx-folder-plus' ></i>
-                    <span>Add new project</span>
+                <div class="list-wrapper hide" id="add-project">
+                    <i class='bx bx-folder-plus hide icon' ></i>
+                    <div class="list-item">Add new project</div>
                 </div>
             </div>
-            <div class="dark-mode-wrapper">
-                <i class='bx bxs-moon' ></i>
-                <i class='bx bxs-sun' ></i>
-                <span id="dark-mode-text">Dark mode</span>
-                <span id="light-mode-text"></span>
-                <div id="toggle-wrapper">
-                    <div id="toggle-switch"></div>
+            <div class="dark-mode-wrapper hide">
+                <div class="sun-moon">
+                    <i class='bx bx-moon' ></i>
+                    <i class='bx bx-sun' ></i>
                 </div>
+                <div class="sun-moon-text">
+                    <span id="dark-mode-text">Dark Mode</span>
+                    
+                </div>
+                <div class="toggle-wrapper">
+                    <div id="dark-toggle">
+                    </div>
+                </div>
+
+                
 
             </div>
             

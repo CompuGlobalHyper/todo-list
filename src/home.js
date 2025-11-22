@@ -1,7 +1,36 @@
 export const HomePage = {
     container: document.querySelector('#container'),
 
-    
+    darkMode() {
+        const body = document.querySelector('body')
+        const darkToggle = document.querySelector('.toggle-wrapper')
+        const text = document.querySelector('#dark-mode-text')
+        const moon = document.querySelector('.bx bx-moon')
+        const sun = document.querySelector('.bx bx-sun')
+
+        darkToggle.addEventListener('click', () => {
+            console.log('dark')
+            body.classList.toggle('dark')
+
+            if (body.classList.contains('dark')) {
+                text.innerText = 'Light Mode'
+            } else {
+                text.innerText = 'Dark Mode'
+            }
+
+        })
+    },
+
+    sideBarToggle() {
+        const sidebar = document.querySelector('.sidebar')
+        const toggle = document.querySelector('.toggle')
+
+        toggle.addEventListener('click', () => {
+            sidebar.classList.toggle('close')
+            this.container.classList.toggle('close')
+        })
+
+    },
     renderProjects(projects) {
         for (let project of projects) {
             let projectBubble = document.createElement('div')
@@ -109,5 +138,7 @@ export const HomePage = {
         this.renderProjects(projects);
         this.renderStickyBar();
         this.renderTaskDialog();
+        this.darkMode();
+        this.sideBarToggle();
     }
 }

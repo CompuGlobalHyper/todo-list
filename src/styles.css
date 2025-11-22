@@ -9,7 +9,7 @@
     --primary-color: rgb(106, 126, 255);
     --primary-color-light:rgb(246, 244, 255);
     --toggle-color: rgb(209, 205, 229);
-    --text-color: rgb(83, 81, 96);
+    --text-color: rgb(102, 99, 117);
 
     --trans-02: all 0.2s ease;
     --trans-03: all 0.3s ease;
@@ -17,7 +17,15 @@
     --trans-05: all 0.5s ease;
 }
     
+body.dark {
+    --body-color: rgb(38, 38, 43);
+    --sidebar-color: rgb(82, 81, 85);
+    --primary-color: rgb(77, 90, 180);
+    --primary-color-light:rgb(142, 141, 148);
+    --toggle-color: rgb(209, 205, 229);
+    --text-color: rgb(244, 242, 252);
 
+}
 
 
 /* http://meyerweb.com/eric/tools/css/reset/ 
@@ -78,19 +86,57 @@ body {
     height: 100dvh;
 }
 
+[class*="text"] {
+    color: var(--text-color);
+}
 
 .sidebar {
     position: fixed;
     top: 0;
     left: 0;
-    height: 100%;
+    height: 100dvh;
     width: 250px;
     padding: 16px;
     background-color: var(--sidebar-color);
+    transition: var(--trans-02);
 
 }
 
+.sidebar.close {
+    width: 5px;
+    padding: 16px;
+    transition: var(--trans-02);
+}
+
+.sidebar .hide {
+    overflow: visible;
+    transition: all 0.4s ease-in-out 0.1s;
+    opacity: 1;
+
+}
+.sidebar.close .hide {
+    overflow: visible;
+    transition: all 50ms;
+    opacity: 0;
+
+}
+
+.sidebar.close .title-text {
+    min-width: 85px;
+}
+.sidebar.close #title-bar .image-text i {
+    transition: var(--trans-02);
+}
+
+.sidebar.close #add-task, 
+.sidebar.close #add-project {
+    background-color: var(--sidebar-color);
+    transition: all 50ms
+}
+
+
 #title-bar {
+    height: 64px;
     position: relative;
     display: flex;
     align-items: center;
@@ -101,9 +147,10 @@ body {
     font-size: 40px;
     text-align: center;
     padding: 10px;
-    color: var(--body-color);
+    color: rgb(239, 236, 255);
     background-color: var(--primary-color);
     border-radius: 6px;
+    transition: var(--trans-03);
 }
 
 #title-bar .title-text {
@@ -119,7 +166,7 @@ body {
 #title-bar .toggle {
     position: absolute;
     top:50%;
-    right: -23px;
+    right: -30px;
     transform: translateY(-50%);
     width: 30px;
     height: 30px;
@@ -128,8 +175,9 @@ body {
     justify-content: center;
     align-items: center;
     border-radius: 50%;
-    color: var(--sidebar-color);
+    color: rgb(239, 236, 255);
     font-size: 32px;
+    cursor: pointer;
 }
 
 
@@ -140,7 +188,7 @@ body {
     align-items: center;
     gap: clamp(8px, 1.5vw, 32px);
     padding-bottom: clamp(8px, 1.5vw, 32px);
-    margin-top: 20px;
+    margin-top: 40px;
 }
 
 
@@ -163,8 +211,23 @@ body {
     flex-direction: column;
 }
 
-.add-task, .list-wrapper {
+.add-task, .list-wrapper, .my-projects {
     height: 36px;
+    color: var(--text-color);
+}
+
+.add-task, .my-projects {
+    font-size: 20px;
+}
+.add-task, .add-project {
+    color: var(--text-color);
+}
+
+.my-projects {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 
@@ -172,21 +235,47 @@ body {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    
+    border-radius: 6px;
+    cursor: pointer;
+    transition: var(--trans-03);
+    color: var(--text-color);
     cursor: pointer;
 }
 
-.add-task, .add-project {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    
-    gap: clamp(8px, 1.5vw, 32px);
-    padding: clamp(8px, 1.5vw, 32px);
-    cursor: pointer;
+i {
+    color: var(--text-color);
 }
-.list-wrapper i {
+
+.list-wrapper:hover {
+    background-color: var(--primary-color);
+    color: rgb(239, 236, 255);
+}
+
+.list-wrapper:hover i.icon{
+    color: rgb(239, 236, 255);
+}
+i.icon {
     font-size: 24px;
+    padding-left: 12px;
+}
+.tally {
+    padding-right: 12px;
+}
+#add-task, #add-project {
+    width: 75%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primary-color);
+    border-radius: 8px;
+    gap: clamp(8px, 1.5vw, 32px);
+    transition: var(--trans-03);
+}
+
+#add-task *, #add-project * {
+    color: rgb(239, 236, 255);
+    margin: 0;
+    
 }
 
 .list-item {
@@ -194,6 +283,7 @@ body {
     font-weight: 500;
     margin-right: auto;
     margin-left: 12px;
+    transition: var(--trans-03);
 }
 
 
@@ -202,42 +292,84 @@ body {
     justify-content: flex-start;
     align-items: center;
     height: 50px;
-    background-color: red;
     width: 100%;
-    margin-top: calc(100% - 100px);
+    margin-top: 100px;
     cursor: pointer;
 }
 
-.dark-mode-wrapper i {
-    color: aliceblue;
+.sun-moon {
+    height: 50px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-#dark-mode-text {
+.bx-sun{
+    opacity: 0;
+}
+
+body.dark .bx-sun {
+    opacity: 1;
+}
+
+body.dark .bx-moon {
+    opacity: 0;
+}
+
+.dark-mode-wrapper i {
+    position: absolute;
     font-size: 24px;
+}
+
+
+
+.sun-moon-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
     font-weight: 500;
-    margin-right: auto;
+    margin-right: 30px;
     margin-left: 12px;
 }
 
-#toggle-wrapper {
+.toggle-wrapper {
+    position: relative;
+    height: 100%;
+    min-width: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+#dark-toggle {
     position: relative;
     width: 40px;
     height: 20px;
-    border-radius: 12px;
-    background-color: blue;
+    border-radius: 25px;
+    background-color: var(--toggle-color);
 }
 
-#toggle-switch {
+#dark-toggle:before {
+    content: '';
     position: absolute;
-    top: 20%;
+    top: 50%;
+    transform: translateY(-50%);
     left: 5px;
-    width: 12px;
-    height: 12px;
+    width: 15px;
+    height: 15px;
     border-radius: 50%;
-    background-color: orange;
+    background-color: var(--sidebar-color);
+    transition: var(--trans-03);
+}
+
+body.dark #dark-toggle:before {
+    left: 20px
 }
 
 #container {
+    margin-left: 30px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -267,15 +399,26 @@ body {
     display: flex;
     justify-content: center;
     gap: clamp(8px, 1.5vw, 32px);
-    
+    opacity: 1;
+    transition: var(--trans-02);
+}
+
+#container.close #sticky-bar {
+    pointer-events: none;
+    opacity: 0;
+    transition: var(--trans-02);
 }
 
 
 .sticky-button {
     margin: 2vh 0;
-    border: 1px solid black;
+    background-color: var(--primary-color);
+    border: 1px solid rgb(239, 236, 255);
+    border-radius: 8px;
+    gap: clamp(8px, 1.5vw, 32px);
+    transition: var(--trans-03);
+    color: rgb(239, 236, 255);
     text-align: center;
-    background-color: white;
     padding: clamp(8px, 1.5vw, 32px);
     display: flex;
     justify-content: center;
