@@ -99,6 +99,7 @@ body {
     padding: 16px;
     background-color: var(--sidebar-color);
     transition: var(--trans-02);
+    overflow-y: scroll;
 
 }
 
@@ -110,7 +111,7 @@ body {
 
 .sidebar .hide {
     overflow: visible;
-    transition: all 0.4s ease-in-out 0.1s;
+    transition: all 0.4s ease-in-out 0.2s;
     opacity: 1;
 
 }
@@ -130,8 +131,15 @@ body {
 
 .sidebar.close #add-task, 
 .sidebar.close #add-project {
+    opacity: 0;
     background-color: var(--sidebar-color);
     transition: all 50ms
+}
+
+.sidebar #add-task, 
+.sidebar #add-project {
+    transition: all 0.4s ease-in-out 0.2s;
+    opacity: 1;
 }
 
 
@@ -163,11 +171,11 @@ body {
     align-items: center;
 }
 
-#title-bar .toggle {
-    position: absolute;
-    top:50%;
-    right: -30px;
-    transform: translateY(-50%);
+.sidebar.close #title-bar .toggle {
+    position: fixed;
+    top:10%;
+    left: 20px;
+    transform: translateY(-50%) translateX(0);
     width: 30px;
     height: 30px;
     background-color: var(--primary-color);
@@ -178,6 +186,25 @@ body {
     color: rgb(239, 236, 255);
     font-size: 32px;
     cursor: pointer;
+    transition: var(--trans-02);
+}
+
+.sidebar #title-bar .toggle {
+    position: fixed;
+    top:10%;
+    left:20px;
+    transform: translateY(-50%) translateX(246px);
+    width: 30px;
+    height: 30px;
+    background-color: var(--primary-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color: rgb(239, 236, 255);
+    font-size: 32px;
+    cursor: pointer;
+    transition: var(--trans-02);
 }
 
 
@@ -191,10 +218,15 @@ body {
     margin-top: 40px;
 }
 
+#first-nav {
+    flex-shrink: 1;
+    position: relative;
+    padding-top: 10px;
+}
 
 .menu-list > *, .project-list > *{
     width: 100%;
-    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .menu-list {
@@ -224,7 +256,7 @@ body {
 }
 
 .my-projects {
-    margin-top: 40px;
+    margin-top: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -293,7 +325,7 @@ i.icon {
     align-items: center;
     height: 50px;
     width: 100%;
-    margin-top: 100px;
+    margin: 20% 0;
     cursor: pointer;
 }
 
@@ -443,7 +475,7 @@ body.dark #dark-toggle:before {
     min-width: 300px;
     min-height: 300px;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     flex-direction: column;
     align-items: center;
     gap: clamp(8px, 1.5vw, 32px);
@@ -453,33 +485,45 @@ body.dark #dark-toggle:before {
 
 .dialog-wrapper {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
     gap: clamp(8px, 1.5vw, 32px);
     width: 100%;
 }
 
+#to-do-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(16px, 2vw, 32px);
+    width: 100%;
+    flex-direction: column;
+}
+
 #priority-wrapper {
     display: flex;
-    justify-content: left;
+    justify-content: center;
     gap: 5vw;
     width: 100%;
     align-items: center;
 }
 
-#close-button, #add-button, #priority-box {
+#add-button, #priority-box {
     border: 2px solid black;
 }
 
 #close-button {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 5px;
+    right: 5px;
     cursor: pointer;
     font-weight: bold;
-    border-radius: 50%;
+    font-size: 30px;
     padding: clamp(4px, 1vw, 24px);
 
 }
+
+#text-close-button, #add-button
 
 #add-button {
     padding: 4px 8px;
@@ -492,11 +536,14 @@ body.dark #dark-toggle:before {
     cursor: pointer;
 }
 
-#details-label {
-    margin-right: auto;
-    margin-top: 4vh;
+input, textarea, select, option {
+    margin-bottom: .5rem;
+    padding: .5rem;
+    width: 100%
 }
 textarea {
+    padding: 0.5rem;
+    margin-top: 8px;
     height: 80px;
     width: 200px
 }

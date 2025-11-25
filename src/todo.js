@@ -1,9 +1,10 @@
 export class ToDo { 
-    constructor(name, description, due, priority) {
+    constructor(name, description, due, priority, project) {
         this.name = name;
         this.description = description;
         this.due = due;
         this.priority = priority;
+        this.project = project
     }
 }
 
@@ -43,8 +44,12 @@ const toDoList = new Project("To-Do")
 const doingList = new Project("Doing")
 const doneList = new Project("Done")
 
-const test = new ToDo ('Make an app', 'This is a test', 'Christmas', true)
+const test = new ToDo ('Make an app', 'This is a test', 'Christmas', true, '')
 toDoList.body.push(test)
+const test1 = new ToDo ('Make an app', 'This is a test', 'Christmas', true, '')
+toDoList.body.push(test1)
+const test2 = new ToDo ('Make an app', 'This is a test', 'Christmas', true, '')
+toDoList.body.push(test2)
 console.log(toDoList.body)
 
 export const initialProjects = [toDoList, doingList, doneList]
