@@ -33,16 +33,57 @@ export const HomePage = {
         })
 
     },
+    closeSideBar() {
+        const sidebar = document.querySelector('.sidebar')
+        const nav = document.querySelector('#first-nav')
+        sidebar.classList.toggle('close')
+        this.container.classList.toggle('close')
+        nav.innerHTML = ''
+    },
+    renderMain() {
+        this.container.innerHTML = ''
+        let todo = document.createElement('div')
+        let done = document.createElement('div')
+        todo.classList.add('content-bubble')
+        done.classList.add('content-bubble')
+        
+
+        let todoTitle = document.createElement('span')
+        todoTitle.id = 'to-do-title'
+        let doneTitle = document.createElement('span')
+        todoTitle.textContent = 'To-Dos'
+        doneTitle.textContent = 'Done!'
+
+        let todoBubbleContainer = document.createElement('div')
+        todoBubbleContainer.classList.add('content-bubble-container')
+        todoBubbleContainer.id = 'to-do-content'
+        let doneBubbleContainer = document.createElement('div')
+        doneBubbleContainer.id = 'done-content'
+        doneBubbleContainer.classList.add('content-bubble-container')
+
+        todo.append(todoTitle, todoBubbleContainer)
+        done.append(doneTitle, doneBubbleContainer)
+        this.container.append(todo, done)
+
+    },
     renderProjects(projects) {
+        const projectList = document.getElementById('expand-project-list')
+        projectList.innerHTML = ''
         for (let project of projects) {
-            console.log(project)
                 let projectBubble = document.createElement('div')
-                projectBubble.classList.add('content-bubble')
+                projectBubble.id = project.id
+                projectBubble.classList.add('list-wrapper')
+                projectBubble.classList.add('hide')
+                projectBubble.classList.add('custom-project')
+                let projectBubbleIcon = document.createElement('i')
+                projectBubbleIcon.classList.add('bx')
+                projectBubbleIcon.classList.add('bx-folder')
+                projectBubbleIcon.classList.add('icon')
                 let projectBubbleText = document.createElement('div')
-                projectBubbleText.classList.add('project-title')
+                projectBubbleText.classList.add('list-item')
                 projectBubbleText.textContent = `${project.title}`
-                projectBubble.appendChild(projectBubbleText)
-                this.container.appendChild(projectBubble)
+                projectBubble.append(projectBubbleIcon, projectBubbleText)
+                projectList.appendChild(projectBubble)
         }
     },
 
@@ -54,25 +95,28 @@ export const HomePage = {
         stickyTask.classList.add('sticky-button')
         stickyTask.id = 'task-button'
         stickyTask.textContent = 'Add to-do'
-        const stickyProject = document.createElement('div')
-        stickyProject.classList.add('sticky-button')
-        stickyProject.id = 'project-button'
-        stickyProject.textContent = 'Add project'
 
         stickyBar.appendChild(stickyTask)
-        stickyBar.appendChild(stickyProject)
         this.container.appendChild(stickyBar)
     },
     createForm(projects) {
             const toDoForm = document.createElement('form')
             toDoForm.classList.add('to-do-form')
-            const addButton = document.createElement('div')
-            addButton.id = 'add-button'
-            addButton.textContent = 'Add'
+            toDoForm.id = 'to-do-form-main'
+            let buttonWrapper = document.createElement('div')
+            let addButton = document.createElement('div')
+            addButton.textContent = 'Save'
+            addButton.id = 'add-task-form'
+            let closeButton = document.createElement('div')
+            closeButton.textContent = 'Close'
+            closeButton.id = 'close-task-form'
+            buttonWrapper.classList.add('button-wrapper')
+            buttonWrapper.append(closeButton, addButton)
 
             const taskWrapper = document.createElement('div')
             taskWrapper.classList.add('dialog-wrapper')
             const taskInput = document.createElement('input')
+            taskInput.id = 'name-input'
             taskInput.setAttribute('placeholder', 'To-do name (required)')
             taskWrapper.appendChild(taskInput)
             
@@ -80,6 +124,7 @@ export const HomePage = {
             dueDateWrapper.classList.add('dialog-wrapper')
             const dueDateInput = document.createElement('input')
             dueDateInput.setAttribute('type', 'date')
+            dueDateInput.id = 'due-input'
             dueDateWrapper.appendChild(dueDateInput)
 
             const priorityWrapper = document.createElement('div')
@@ -90,6 +135,22 @@ export const HomePage = {
             priorityBox.id = 'priority-box'
             priorityWrapper.appendChild(priorityLabel)
             priorityWrapper.appendChild(priorityBox)
+
+            priorityBox.addEventListener('click', () => {
+                let checkcheck = document.getElementById('checkmark')
+                if (!checkcheck) {
+                    let check = document.createElement('i')
+                    check.id = 'checkmark'
+                    check.classList.add('bx')
+                    check.classList.add('bx-check')
+                    check.classList.add('icon')
+                    priorityBox.append(check)
+                } else {
+                    priorityBox.innerHTML = ''
+                }
+                
+                
+            })
             
             const detailsInputWrapper = document.createElement('div')
             const detailsInput = document.createElement('textarea')
@@ -100,29 +161,39 @@ export const HomePage = {
             const projectInputWrapper = document.createElement('div')
             const projectInput = document.createElement('select')
             projectInput.id = 'select'
+            let option = document.createElement('option')
+            option.value = ''
+            option.selected = true
+            option.text = 'No project selected'
+            projectInput.add(option)
+
             for (let project of projects) {
                 console.log(project.title)
-                let option = document.createElement('option')
-                option.text = `${project.title}`
-                projectInput.add(option)
+                let optionCustom = document.createElement('option')
+                optionCustom.text = `${project.title}`
+                optionCustom.value = `${project.title}`
+                projectInput.add(optionCustom)
             }
             projectInputWrapper.appendChild(projectInput)
 
-            toDoForm.append(taskWrapper, dueDateWrapper, priorityWrapper
-                , detailsInputWrapper, projectInputWrapper, addButton)
+            toDoForm.append(taskWrapper, dueDateWrapper, 
+                detailsInputWrapper, projectInputWrapper,
+                priorityWrapper, buttonWrapper)
             return toDoForm
     },
-    createMiniForm(projects) {
+    createMiniForm() {
         let formWrapper = document.createElement('div')
         formWrapper.id = 'form-wrapper'
         let form = document.createElement('form')
         form.id = 'mini-form'
         let projectInput = document.createElement('input')
         projectInput.setAttribute('placeholder', 'Enter new project name')
+        projectInput.id = 'new-project-input'
         let buttonWrapper = document.createElement('div')
+        buttonWrapper.classList.add('button-wrapper')
         let addButton = document.createElement('div')
-        addButton.textContent = 'Add'
-        addButton.id = 'add-project'
+        addButton.textContent = 'Save'
+        addButton.id = 'add-project-form'
         let closeButton = document.createElement('div')
         closeButton.textContent = 'Close'
         closeButton.id = 'close-project-form'
@@ -149,81 +220,112 @@ export const HomePage = {
     renderSidebarForm(form) {
         const sidebarAdd = document.querySelector('#add-task')
         const nav = document.querySelector('#first-nav')
-        let closeButton = document.createElement('div')
+        let closeButton = document.getElementById('close-task-form')
+
+        if (!closeButton) console.log('Error!')
 
         sidebarAdd.addEventListener('click', () => {
-            if (!document.getElementById('text-close-button')) {
-                closeButton.id = 'text-close-button'
-                closeButton.textContent = 'Close'
-                nav.append(form, closeButton) 
-            }
-            else {}
-            nav.append(form, closeButton) 
-
+            nav.append(form)
+            let closeButton = document.getElementById('close-task-form')
             closeButton.addEventListener('click', function() {
                 nav.innerHTML = ''
-            })
         })
+        })
+        
     },
     renderFormDialog(form) {
         const toDoDialog = document.createElement('dialog')
         toDoDialog.id = 'to-do-dialog'
-
-        let closeButton2 = document.createElement('i')
-        closeButton2.classList.add('bx')
-        closeButton2.classList.add('bx-x-circle')
-        closeButton2.id = 'close-button'
-        toDoDialog.appendChild(closeButton2)
-
         toDoDialog.appendChild(form)
         this.container.append(toDoDialog)
 
         const addTask = document.querySelector('#task-button')
         addTask.addEventListener('click', () => {
             toDoDialog.showModal()
-        })
-
-        const closeButton = document.querySelector('#close-button')
-        closeButton.addEventListener('click', function() {
-            toDoDialog.close()
-            
+            let closeButton = document.getElementById('close-task-form')
+            closeButton.addEventListener('click', function() {
+                let myForm = document.getElementById('to-do-form-main')
+                myForm.reset()
+                toDoDialog.close()
+            })
         })
     },
     renderToDoObject(todo) {
+        let toDoContainer = document.getElementById('to-do-content')
+        toDoContainer.innerHTML = ''
         for (let object of todo) {
-            let toDoContainer = document.querySelector('.content-bubble')
             let toDoBubble = document.createElement('div')
             toDoBubble.classList.add('to-do-bubble')
+            toDoBubble.id = object.id
+            console.log(object.id)
             
             let nameWrapper = document.createElement('div')
             nameWrapper.classList.add('item-wrapper')
-            nameWrapper.textContent = `${object.name}`
+            nameWrapper.id = 'name-wrapper'
+            let toDoName = document.createElement('span')
+            toDoName.classList.add('text')
+            toDoName.textContent = `${object.name}`
+            nameWrapper.append(toDoName)
+
+            if (object.priority) {
+                let priorityFlag = document.createElement('i')
+                priorityFlag.classList.add('bx') 
+                priorityFlag.classList.add('bxs-flag')
+                priorityFlag.classList.add('icon')
+                nameWrapper.append(priorityFlag)
+            }
+
+            let gear = document.createElement('i')
+            gear.classList.add('bx')
+            gear.classList.add('bxs-cog')
+            gear.classList.add('icon')
+            gear.id = 'gear'
+            nameWrapper.appendChild(gear)
+
 
             let descripWrapper = document.createElement('div')
             descripWrapper.classList.add('item-wrapper')
+            descripWrapper.classList.add('small')
             descripWrapper.textContent = `${object.description}`
 
             let dateWrapper = document.createElement('div')
             dateWrapper.classList.add('item-wrapper')
+            dateWrapper.classList.add('small')
             dateWrapper.textContent = `Due by: ${object.due}`
             
             let bottomItems = document.createElement('div')
+            bottomItems.classList.add('bottom-todo')
+
+            let doneButton = document.createElement('div')
+            doneButton.textContent = 'Done!'
+            doneButton.id = 'done-button'
 
             if (object.project) {
                 let projectWrapper = document.createElement('div')
                 projectWrapper.classList.add('item-wrapper')
+                projectWrapper.classList.add('small')
                 projectWrapper.textContent = `| ${object.project}`
-                bottomItems.append(dateWrapper, projectWrapper)
+                bottomItems.append(dateWrapper, projectWrapper, doneButton)
             } else {
-                bottomItems.append(dateWrapper) 
+                bottomItems.append(dateWrapper, doneButton) 
             }
+
 
             toDoBubble.append(nameWrapper, descripWrapper, bottomItems)
             toDoContainer.appendChild(toDoBubble)
         }
     },
 
+    setPage(list, allProjects) {
+        this.renderToDoObject(list)
+        this.closeSideBar()
+        this.renderStickyBar()
+        const bigForm = this.createForm(allProjects);
+        this.renderFormDialog(bigForm)
+    },
+
     init(projects) {
+        this.renderMain()
         this.renderProjects(projects);
         this.renderStickyBar();
         const bigForm = this.createForm(projects);

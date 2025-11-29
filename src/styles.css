@@ -10,6 +10,7 @@
     --primary-color-light:rgb(246, 244, 255);
     --toggle-color: rgb(209, 205, 229);
     --text-color: rgb(102, 99, 117);
+    --light-text-color: rgb(165, 161, 184);
 
     --trans-02: all 0.2s ease;
     --trans-03: all 0.3s ease;
@@ -24,7 +25,12 @@ body.dark {
     --primary-color-light:rgb(142, 141, 148);
     --toggle-color: rgb(209, 205, 229);
     --text-color: rgb(244, 242, 252);
+    --light-text-color: rgb(165, 161, 184);
 
+}
+
+body::-webkit-scrollbar {
+  display: none;
 }
 
 
@@ -86,8 +92,10 @@ body {
     height: 100dvh;
 }
 
+
 [class*="text"] {
     color: var(--text-color);
+    font-weight: 500;
 }
 
 .sidebar {
@@ -101,6 +109,10 @@ body {
     transition: var(--trans-02);
     overflow-y: scroll;
 
+}
+
+.sidebar::-webkit-scrollbar {
+  display: none;
 }
 
 .sidebar.close {
@@ -233,6 +245,7 @@ body {
     width: 100%;
     display: flex;
     flex-direction: column;
+    border-bottom: 1px solid var(--light-text-color);
     
     
 }
@@ -255,8 +268,14 @@ body {
     color: var(--text-color);
 }
 
+
+
+#add-task i, #add-project i {
+    padding: 0;
+}
+
 .my-projects {
-    margin-top: 20px;
+    margin-top: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -300,7 +319,7 @@ i.icon {
     align-items: center;
     background-color: var(--primary-color);
     border-radius: 8px;
-    gap: clamp(8px, 1.5vw, 32px);
+    gap: clamp(12px, 1.5vw, 32px);
     transition: var(--trans-03);
 }
 
@@ -310,9 +329,12 @@ i.icon {
     
 }
 
+#add-project, #add-task {
+    min-width: 200px;
+}
+
 .list-item {
     font-size: 16px;
-    font-weight: 500;
     margin-right: auto;
     margin-left: 12px;
     transition: var(--trans-03);
@@ -325,7 +347,7 @@ i.icon {
     align-items: center;
     height: 50px;
     width: 100%;
-    margin: 20% 0;
+    margin: 10% 0;
     cursor: pointer;
 }
 
@@ -418,6 +440,7 @@ body.dark #dark-toggle:before {
 
 .project-title {
     padding: clamp(8px, 1.5vw, 32px);
+    font-weight: 900;
 }
 
 
@@ -465,8 +488,22 @@ body.dark #dark-toggle:before {
 
 }
 
+.to-do-bubble * {
+    pointer-events: none;
+}
+
+.list-wrapper * {
+    pointer-events: none;
+}
+
 .item-wrapper {
-    padding: clamp(8px, 1.5vw, 32px);
+    padding: 4px;
+}
+
+.small {
+    color: var(--light-text-color);
+    font-size: 0.7rem;
+    padding: 4px;
 }
 
 
@@ -506,44 +543,55 @@ body.dark #dark-toggle:before {
     gap: 5vw;
     width: 100%;
     align-items: center;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
 }
 
 #add-button, #priority-box {
-    border: 2px solid black;
+    border: 2px solid var(--text-color);;
 }
-
-#close-button {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 30px;
-    padding: clamp(4px, 1vw, 24px);
-
-}
-
-#text-close-button, #add-button
 
 #add-button {
     padding: 4px 8px;
     cursor: pointer;
     
 }
-
-#priority-box {
-    padding: clamp(8px, 2vw, 16px);
-    cursor: pointer;
+#mini-form {
+    margin-top: 10px;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
+#mini-form input {
+    width: 100%;
+}
+
+#priority-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    overflow: visible;
+}
+
+#checkmark {
+    font-size: 20px;
+    padding: 0;
+}
 input, textarea, select, option {
+    font-family: "Quicksand", sans-serif;
     margin-bottom: .5rem;
     padding: .5rem;
     width: 100%
 }
 textarea {
     padding: 0.5rem;
-    margin-top: 8px;
     height: 80px;
     width: 200px
 }
@@ -553,4 +601,65 @@ textarea {
         min-width: 400px;
         min-height: 400px;
     }
+}
+
+.button-wrapper {
+    margin-bottom: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(8px, 1.5vw, 32px);
+}
+
+.button-wrapper * {
+    background-color: var(--primary-color);
+    border: 1px solid rgb(239, 236, 255);
+    border-radius: 8px;
+    gap: clamp(8px, 1.5vw, 32px);
+    transition: var(--trans-03);
+    color: rgb(239, 236, 255);
+    text-align: center;
+    padding: clamp(8px, 1.5vw, 32px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+#name-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#name-wrapper .icon {
+    font-size: 20px;
+}
+
+#gear {
+    margin-left: auto
+}
+
+.bottom-todo {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#done-button {
+    margin-left: auto;
+    background-color: var(--primary-color);
+    border: 1px solid rgb(239, 236, 255);
+    border-radius: 8px;
+    gap: clamp(8px, 1.5vw, 32px);
+    transition: var(--trans-03);
+    color: rgb(239, 236, 255);
+    font-size: 14px;
+    font-weight: 900;
+    text-align: center;
+    padding: 4px 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
 }

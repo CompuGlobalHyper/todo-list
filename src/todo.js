@@ -1,24 +1,12 @@
-export class ToDo { 
+export class ToDoItem { 
     constructor(name, description, due, priority, project) {
         this.name = name;
         this.description = description;
         this.due = due;
         this.priority = priority;
         this.project = project
-    }
-}
-
-export class Checklist {
-    constructor(name, description, due, priority) {
-        this.name = name;
-        this.description = description;
-        this.due = due;
-        this.priority = priority;
-        this.list = [];
-    }
-
-    addToList (item) {
-        this.list.push(item)
+        this.done = false
+        this.id = crypto.randomUUID()
     }
 }
 
@@ -26,30 +14,37 @@ export class Project {
     constructor(title) {
         this.title = title;
         this.body = [];
+        this.id = crypto.randomUUID()
     }
 
     addToDo() {
-        let toDo = new ToDo()
-        this.body.push(toDo)
-    }
-
-    addChecklist() {
-        let toDo = new ToDo()
+        let toDo = new ToDoItem()
         this.body.push(toDo)
     }
 }
 
 
-const toDoList = new Project("To-Do")
-const doingList = new Project("Doing")
-const doneList = new Project("Done")
+const toDoList = []
+const doneList = []
+const xMas = new Project("Christmas Project")
+const testProject = new Project("Test")
+const allProjects = [xMas, testProject]
 
-const test = new ToDo ('Make an app', 'This is a test', 'Christmas', true, '')
-toDoList.body.push(test)
-const test1 = new ToDo ('Make an app', 'This is a test', 'Christmas', true, '')
-toDoList.body.push(test1)
-const test2 = new ToDo ('Make an app', 'This is a test', 'Christmas', true, '')
-toDoList.body.push(test2)
-console.log(toDoList.body)
+const test0 = new ToDoItem ('Make an app', 'This is a test', 'Christmas', true, '')
+toDoList.push(test0)
+const test1 = new ToDoItem ('Do 100 pushups', 'This is a test', 'Christmas', false, 'Christmas Project')
+toDoList.push(test1)
+const test2 = new ToDoItem ('Eat sweet potatoes', 'This is a test', 'Christmas', true, 'Test')
+toDoList.push(test2)
+console.log(toDoList)
 
-export const initialProjects = [toDoList, doingList, doneList]
+for (let project of allProjects) {
+    for (let object of toDoList) {
+        if (object.project === project.title) {
+            project.body.push(object)
+            console.log('match found!')
+        }
+    }
+}
+
+export { toDoList, doneList, allProjects}
