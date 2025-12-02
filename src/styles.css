@@ -11,6 +11,7 @@
     --toggle-color: rgb(209, 205, 229);
     --text-color: rgb(102, 99, 117);
     --light-text-color: rgb(165, 161, 184);
+    --alert-color: rgb(205, 105, 83);
 
     --trans-02: all 0.2s ease;
     --trans-03: all 0.3s ease;
@@ -99,6 +100,7 @@ body {
 }
 
 .sidebar {
+    pointer-events: auto;
     position: fixed;
     top: 0;
     left: 0;
@@ -108,14 +110,16 @@ body {
     background-color: var(--sidebar-color);
     transition: var(--trans-02);
     overflow-y: scroll;
-
+    z-index: 999;
 }
+
 
 .sidebar::-webkit-scrollbar {
   display: none;
 }
 
 .sidebar.close {
+    pointer-events: none;
     width: 5px;
     padding: 16px;
     transition: var(--trans-02);
@@ -133,6 +137,8 @@ body {
     opacity: 0;
 
 }
+
+
 
 .sidebar.close .title-text {
     min-width: 85px;
@@ -184,10 +190,11 @@ body {
 }
 
 .sidebar.close #title-bar .toggle {
+    pointer-events: auto;
     position: fixed;
     top:10%;
     left: 20px;
-    transform: translateY(-50%) translateX(0);
+    transform: translateY(-50%) translateX(0) scaleY(-1);
     width: 30px;
     height: 30px;
     background-color: var(--primary-color);
@@ -201,11 +208,13 @@ body {
     transition: var(--trans-02);
 }
 
+
+
 .sidebar #title-bar .toggle {
     position: fixed;
     top:10%;
     left:20px;
-    transform: translateY(-50%) translateX(246px);
+    transform: translateY(-50%) translateX(246px) scaleX(-1);;
     width: 30px;
     height: 30px;
     background-color: var(--primary-color);
@@ -295,6 +304,10 @@ body {
 
 i {
     color: var(--text-color);
+}
+
+.bxs-flag {
+    color: var(--alert-color);
 }
 
 .list-wrapper:hover {
@@ -423,16 +436,41 @@ body.dark #dark-toggle:before {
 }
 
 #container {
+    position: relative;
     margin-left: 30px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     padding: clamp(32px, 5vw, 150px);
     gap: clamp(8px, 1.5vw, 32px);
+    height: 100dvh;
 }
 
+#container.close {
+    pointer-events: none;
+}
+
+#container.close {
+    z-index: 1;
+}
+
+#container.close::after {
+    pointer-events: auto;
+    transition: var(--trans-03);
+    position: absolute;
+    content: '';
+    top: 0;
+    right: 0;
+    opacity: 0.5;
+    background-color: rgb(0, 0, 0);
+    height: 100%;
+    width: 30%;
+    z-index: 2;
+}
+
+
+
 .content-bubble {
-    border: 1px solid black;
     min-width: 75dvw;
     min-height: 40dvh;
 
@@ -473,18 +511,37 @@ body.dark #dark-toggle:before {
     gap: clamp(8px, 1.5vw, 32px);
     transition: var(--trans-03);
     color: rgb(239, 236, 255);
+    font-size: 16px;
     text-align: center;
-    padding: clamp(8px, 1.5vw, 32px);
+    padding: 16px 12px;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    box-shadow: 2px 2px 5px grey;
+}
+
+#content-bubble-container {
+    width: 100%;
+}
+
+.list-header {
+    display: block;
+    padding-bottom: clamp(12px, 1.5vw, 32px);
+    width: 100%;
+    color: var(--text-color);
+    font-size: 24px;
+    font-weight: 800;
 }
 
 .to-do-bubble {
-    border: 1px solid black;
-    padding: clamp(8px, 1.5vw, 32px);
-    margin: clamp(8px, 1.5vw, 32px);
+    border-top: 1px solid var(--light-text-color);
+    padding-top: clamp(8px, 1.5vw, 32px);
+    margin-top: clamp(8px, 1.5vw, 32px);
+    padding-bottom: clamp(8px, 1.5vw, 32px);
+    margin-bottom: clamp(8px, 1.5vw, 32px);
+
+
 
 }
 
@@ -504,6 +561,10 @@ body.dark #dark-toggle:before {
     color: var(--light-text-color);
     font-size: 0.7rem;
     padding: 4px;
+}
+
+#small-project-name {
+    border-left: 1px solid var(--light-text-color);
 }
 
 
@@ -662,4 +723,46 @@ textarea {
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    pointer-events: auto;
+}
+
+#delete-button {
+    margin-left: auto;
+    background-color: var(--alert-color);
+    border: 1px solid rgb(239, 236, 255);
+    border-radius: 8px;
+    gap: clamp(8px, 1.5vw, 32px);
+    transition: var(--trans-03);
+    color: rgb(239, 236, 255);
+    font-size: 14px;
+    font-weight: 900;
+    text-align: center;
+    padding: 4px 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+#placeholder {
+    padding: 24px 0;
+    border-top: 1px solid var(--light-text-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 24px
+}
+
+#placeholder-icon {
+    opacity: 0.4;
+    color: var(--light-text-color);
+    font-size: 160px;
+    z-index: 0;
+}
+
+#placeholder-text {
+    color: var(--light-text-color);
+    font-size: 24px;
 }

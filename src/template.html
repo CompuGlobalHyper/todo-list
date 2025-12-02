@@ -30,22 +30,21 @@
                     <div class="list-wrapper hide all-to-do">
                         <i class='bx bx-list-ul icon' ></i>
                         <div class="list-item">All To-Dos</div>
-                        <div class="tally">0</div>
+                        <div class="tally" id="all-tally">0</div>
                     </div>
-                    <div class="list-wrapper hide">
+                    <div class="list-wrapper hide" id="today-option">
                         <i class='bx bx-calendar-event icon' ></i>
                         <div class="list-item">Today</div>
-                        <div class="tally">0</div>
+                        <div class="tally" id="today-tally">0</div>
                     </div>
-                    <div class="list-wrapper hide">
+                    <div class="list-wrapper hide" id="overdue-option">
                         <i class='bx bx-calendar-exclamation icon' ></i>
                         <div class="list-item">Overdue</div>
-                        <div class="tally">0</div>
+                        <div class="tally" id="overdue-tally">0</div>
                     </div>
                 </div>
                 <div class="my-projects hide">Projects</div>
-                <div class="project-list hide" id="expand-project-list">
-                </div>
+                <div class="project-list hide" id="expand-project-list"></div>
                 <div class="list-wrapper hide" id="add-project">
                     <i class='bx bx-folder-plus hide icon' ></i>
                     <div class="list-item">Add new project</div>
@@ -71,7 +70,8 @@
             
         </div>
     </header>
-    <div id="container" class="container"></div>
+    <div id="container" class="container">
+    </div>
     
 </body>
 </html>

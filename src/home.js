@@ -1,3 +1,5 @@
+import { formatRelative } from 'date-fns'
+
 export const HomePage = {
     container: document.querySelector('#container'),
 
@@ -21,24 +23,12 @@ export const HomePage = {
         })
     },
 
-    sideBarToggle() {
-        const sidebar = document.querySelector('.sidebar')
-        const toggle = document.querySelector('.toggle')
-        const nav = document.querySelector('#first-nav')
-
-        toggle.addEventListener('click', () => {
-            sidebar.classList.toggle('close')
-            this.container.classList.toggle('close')
-            nav.innerHTML = ''
-        })
-
-    },
+    
     closeSideBar() {
         const sidebar = document.querySelector('.sidebar')
-        const nav = document.querySelector('#first-nav')
         sidebar.classList.toggle('close')
         this.container.classList.toggle('close')
-        nav.innerHTML = ''
+        
     },
     renderMain() {
         this.container.innerHTML = ''
@@ -50,7 +40,9 @@ export const HomePage = {
 
         let todoTitle = document.createElement('span')
         todoTitle.id = 'to-do-title'
+        todoTitle.classList.add('list-header')
         let doneTitle = document.createElement('span')
+        doneTitle.classList.add('list-header')
         todoTitle.textContent = 'To-Dos'
         doneTitle.textContent = 'Done!'
 
@@ -82,11 +74,13 @@ export const HomePage = {
                 let projectBubbleText = document.createElement('div')
                 projectBubbleText.classList.add('list-item')
                 projectBubbleText.textContent = `${project.title}`
-                projectBubble.append(projectBubbleIcon, projectBubbleText)
+                let projectBubbleTally = document.createElement('div')
+                projectBubbleTally.classList.add('tally')
+                projectBubbleTally.textContent = project.body.length
+                projectBubble.append(projectBubbleIcon, projectBubbleText, projectBubbleTally)
                 projectList.appendChild(projectBubble)
         }
     },
-
     renderStickyBar() { 
         const stickyBar = document.createElement('div')
         stickyBar.id = 'sticky-bar'
@@ -187,8 +181,9 @@ export const HomePage = {
         let form = document.createElement('form')
         form.id = 'mini-form'
         let projectInput = document.createElement('input')
-        projectInput.setAttribute('placeholder', 'Enter new project name')
+        projectInput.setAttribute('placeholder', 'Enter new project, 18 char max')
         projectInput.id = 'new-project-input'
+        projectInput.setAttribute('maxlength', '18')
         let buttonWrapper = document.createElement('div')
         buttonWrapper.classList.add('button-wrapper')
         let addButton = document.createElement('div')
@@ -203,7 +198,8 @@ export const HomePage = {
 
         return form
     },
-    renderMiniForm(form) {
+    renderMiniForm() {
+        let form = this.createMiniForm()
         let bottomNav = document.querySelector('#nav-bar')
         let createProjectForm = document.querySelector('#add-project')
         
@@ -217,47 +213,52 @@ export const HomePage = {
             })
         })
     },
-    renderSidebarForm(form) {
-        const sidebarAdd = document.querySelector('#add-task')
-        const nav = document.querySelector('#first-nav')
-        let closeButton = document.getElementById('close-task-form')
+    // renderSidebarForm(projects) {
+    //     let form = this.createForm(projects)
+    //     const sidebarAdd = document.querySelector('#add-task')
+    //     const nav = document.querySelector('#first-nav')
 
-        if (!closeButton) console.log('Error!')
-
-        sidebarAdd.addEventListener('click', () => {
-            nav.append(form)
-            let closeButton = document.getElementById('close-task-form')
-            closeButton.addEventListener('click', function() {
-                nav.innerHTML = ''
-        })
-        })
+    //     sidebarAdd.addEventListener('click', () => {
+    //         nav.append(form)
+    //         let closeButton = document.getElementById('close-task-form')
+    //         closeButton.addEventListener('click', function() {
+    //             let mainForm = document.querySelector('#to-do-form-main')
+    //             if (mainForm) nav.removeChild(mainForm)
+    //     })
+    //     })
         
-    },
-    renderFormDialog(form) {
-        const toDoDialog = document.createElement('dialog')
-        toDoDialog.id = 'to-do-dialog'
-        toDoDialog.appendChild(form)
-        this.container.append(toDoDialog)
+    // },
+    // renderFormDialog(projects) {
+    //     let form = this.createForm(projects)
+    //     const toDoDialog = document.createElement('dialog')
+    //     toDoDialog.id = 'to-do-dialog'
+    //     toDoDialog.appendChild(form)
+    //     this.container.append(toDoDialog)
 
-        const addTask = document.querySelector('#task-button')
-        addTask.addEventListener('click', () => {
-            toDoDialog.showModal()
-            let closeButton = document.getElementById('close-task-form')
-            closeButton.addEventListener('click', function() {
-                let myForm = document.getElementById('to-do-form-main')
-                myForm.reset()
-                toDoDialog.close()
-            })
-        })
-    },
-    renderToDoObject(todo) {
-        let toDoContainer = document.getElementById('to-do-content')
+    //     const addTask = document.querySelector('#task-button')
+    //     addTask.addEventListener('click', () => {
+    //         toDoDialog.showModal()
+    //         let closeButton = document.getElementById('close-task-form')
+    //         closeButton.addEventListener('click', function() {
+    //             let myForm = document.getElementById('to-do-form-main')
+    //             myForm.reset()
+    //             toDoDialog.close()
+    //         })
+    //     })
+    // },
+    renderToDoObject(list, containerID = 'to-do-content') {
+        let toDoContainer = document.getElementById(containerID)
         toDoContainer.innerHTML = ''
-        for (let object of todo) {
+        let doneList = list.filter((obj) => obj.done)
+
+        if (list.length === 0) {
+            this.generatePlaceholder(containerID)
+            return
+        }
+        for (let object of list) {
             let toDoBubble = document.createElement('div')
             toDoBubble.classList.add('to-do-bubble')
             toDoBubble.id = object.id
-            console.log(object.id)
             
             let nameWrapper = document.createElement('div')
             nameWrapper.classList.add('item-wrapper')
@@ -275,12 +276,12 @@ export const HomePage = {
                 nameWrapper.append(priorityFlag)
             }
 
-            let gear = document.createElement('i')
-            gear.classList.add('bx')
-            gear.classList.add('bxs-cog')
-            gear.classList.add('icon')
-            gear.id = 'gear'
-            nameWrapper.appendChild(gear)
+            // let gear = document.createElement('i')
+            // gear.classList.add('bx')
+            // gear.classList.add('bxs-cog')
+            // gear.classList.add('icon')
+            // gear.id = 'gear'
+            // nameWrapper.appendChild(gear)
 
 
             let descripWrapper = document.createElement('div')
@@ -291,20 +292,33 @@ export const HomePage = {
             let dateWrapper = document.createElement('div')
             dateWrapper.classList.add('item-wrapper')
             dateWrapper.classList.add('small')
-            dateWrapper.textContent = `Due by: ${object.due}`
+            let text = formatRelative(object.due, new Date())
+            text = text.replace(/ at .+$/, "")
+            dateWrapper.textContent = `Due: ${text}`
             
             let bottomItems = document.createElement('div')
             bottomItems.classList.add('bottom-todo')
 
             let doneButton = document.createElement('div')
-            doneButton.textContent = 'Done!'
-            doneButton.id = 'done-button'
+            if (containerID === 'to-do-content') {
+                doneButton.textContent = 'Done!'
+                doneButton.id = 'done-button'
+                doneButton.setAttribute('data-id', object.id)
+            }
+
+            else {
+                doneButton.textContent = 'Delete?'
+                doneButton.id = 'delete-button'
+                doneButton.setAttribute('data-id', object.id)
+            }
+            
 
             if (object.project) {
                 let projectWrapper = document.createElement('div')
                 projectWrapper.classList.add('item-wrapper')
                 projectWrapper.classList.add('small')
-                projectWrapper.textContent = `| ${object.project}`
+                projectWrapper.id = 'small-project-name'
+                projectWrapper.textContent = `${object.project}`
                 bottomItems.append(dateWrapper, projectWrapper, doneButton)
             } else {
                 bottomItems.append(dateWrapper, doneButton) 
@@ -320,20 +334,33 @@ export const HomePage = {
         this.renderToDoObject(list)
         this.closeSideBar()
         this.renderStickyBar()
-        const bigForm = this.createForm(allProjects);
-        this.renderFormDialog(bigForm)
+    },
+
+    generatePlaceholder(containerID = 'to-do-content') {
+        let toDoContainer = document.getElementById(containerID)
+
+        let placeholderDiv = document.createElement('div')
+        let placeholderIcon = document.createElement('div')
+        let placeholderText = document.createElement('div')
+
+        placeholderIcon.classList.add('bx')
+        placeholderIcon.classList.add('bx-notepad')
+        placeholderDiv.id = 'placeholder'
+        placeholderIcon.id = 'placeholder-icon'
+        placeholderText.textContent = "There's nothing here!"
+        placeholderText.id = 'placeholder-text'
+
+        placeholderDiv.append(placeholderIcon, placeholderText)
+        toDoContainer.append(placeholderDiv)
+
+
     },
 
     init(projects) {
         this.renderMain()
         this.renderProjects(projects);
         this.renderStickyBar();
-        const bigForm = this.createForm(projects);
-        const miniForm = this.createMiniForm()
-        this.renderSidebarForm(bigForm);
-        this.renderFormDialog(bigForm);
-        this.renderMiniForm(miniForm)
+        this.renderMiniForm()
         this.darkMode();
-        this.sideBarToggle();
     }
 }

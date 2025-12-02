@@ -1,3 +1,4 @@
+import { compareAsc, add } from 'date-fns'
 export class ToDoItem { 
     constructor(name, description, due, priority, project) {
         this.name = name;
@@ -7,7 +8,7 @@ export class ToDoItem {
         this.project = project
         this.done = false
         this.id = crypto.randomUUID()
-    }
+    } 
 }
 
 export class Project {
@@ -23,28 +24,34 @@ export class Project {
     }
 }
 
+export function sortDate(list) {
+    list.sort((a, b) => compareAsc(a.due, b.due))
+}
+
 
 const toDoList = []
 const doneList = []
-const xMas = new Project("Christmas Project")
+const xMas = new Project("Christmas")
 const testProject = new Project("Test")
 const allProjects = [xMas, testProject]
+const now = new Date()
 
-const test0 = new ToDoItem ('Make an app', 'This is a test', 'Christmas', true, '')
+const test0 = new ToDoItem ('Make an app', '', add(new Date(), {days: 1} ), true, '')
+test0.done = true
 toDoList.push(test0)
-const test1 = new ToDoItem ('Do 100 pushups', 'This is a test', 'Christmas', false, 'Christmas Project')
-toDoList.push(test1)
-const test2 = new ToDoItem ('Eat sweet potatoes', 'This is a test', 'Christmas', true, 'Test')
+const test1 = new ToDoItem ('Do 46 pushups', 'This is a test', add(new Date(), {days: 3} ), false, 'Christmas18')
+doneList.push(test1)
+const test2 = new ToDoItem ('Eat sweet potatoes', 'This is a test', add(new Date(), {days: -1} ), true, 'Test')
 toDoList.push(test2)
-console.log(toDoList)
+
 
 for (let project of allProjects) {
     for (let object of toDoList) {
         if (object.project === project.title) {
             project.body.push(object)
-            console.log('match found!')
         }
     }
 }
+
 
 export { toDoList, doneList, allProjects}
