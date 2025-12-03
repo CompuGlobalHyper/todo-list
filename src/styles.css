@@ -209,6 +209,7 @@ body {
     font-size: 32px;
     cursor: pointer;
     transition: var(--trans-02);
+    z-index: 99;
 }
 
 
@@ -229,6 +230,7 @@ body {
     font-size: 32px;
     cursor: pointer;
     transition: var(--trans-02);
+    z-index: 99;
 }
 
 
