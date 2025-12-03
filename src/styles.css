@@ -472,7 +472,6 @@ body.dark #dark-toggle:before {
 
 .content-bubble {
     min-width: 75dvw;
-    min-height: 40dvh;
 
 }
 
@@ -483,6 +482,7 @@ body.dark #dark-toggle:before {
 
 
 #sticky-bar {
+    margin-bottom: 20px;
     position: fixed;
     bottom: 0;
     left: 50%;
@@ -578,7 +578,11 @@ body.dark #dark-toggle:before {
     align-items: center;
     gap: clamp(8px, 1.5vw, 32px);
     padding: clamp(8px, 1.5vw, 32px);
+    background-color: var(--sidebar-color);
+}
 
+#to-do-dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .dialog-wrapper {
@@ -646,11 +650,38 @@ body.dark #dark-toggle:before {
     padding: 0;
 }
 input, textarea, select, option {
+    border: 1px solid var(--light-text-color);
+    background-color: var(--body-color);
+    color: var(--light-text-color);
     font-family: "Quicksand", sans-serif;
     margin-bottom: .5rem;
     padding: .5rem;
-    width: 100%
+    width: 100%;
+    border-radius: 2px;
+    
 }
+
+input[type="date"]::-webkit-inner-spin-button {
+    display: none;
+    -webkit-appearance: none;
+}
+
+input:focus, textarea:focus, 
+select:focus, option:focus {
+    outline: none;
+}
+
+input:valid, textarea:valid, 
+select:valid, option:valid {
+    border: 1px solid var(--light-text-color);
+    background-color: var(--body-color);
+    color: var(--text-color);
+}
+
+::placeholder, select:invalid {
+    color: var(--light-text-color);
+}
+
 textarea {
     padding: 0.5rem;
     height: 80px;
@@ -665,7 +696,7 @@ textarea {
 }
 
 .button-wrapper {
-    margin-bottom: 0.5rem;
+    margin: 1rem 0;
     display: flex;
     justify-content: center;
     align-items: center;

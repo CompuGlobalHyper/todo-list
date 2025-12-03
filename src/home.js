@@ -11,7 +11,6 @@ export const HomePage = {
         const sun = document.querySelector('.bx bx-sun')
 
         darkToggle.addEventListener('click', () => {
-            console.log('dark')
             body.classList.toggle('dark')
 
             if (body.classList.contains('dark')) {
@@ -26,8 +25,8 @@ export const HomePage = {
     
     closeSideBar() {
         const sidebar = document.querySelector('.sidebar')
-        sidebar.classList.toggle('close')
-        this.container.classList.toggle('close')
+        sidebar.classList.add('close')
+        this.container.classList.remove('close')
         
     },
     renderMain() {
@@ -95,6 +94,7 @@ export const HomePage = {
     },
     createForm(projects) {
             const toDoForm = document.createElement('form')
+            toDoForm.setAttribute('autocomplete', 'off')
             toDoForm.classList.add('to-do-form')
             toDoForm.id = 'to-do-form-main'
             let buttonWrapper = document.createElement('div')
@@ -162,7 +162,6 @@ export const HomePage = {
             projectInput.add(option)
 
             for (let project of projects) {
-                console.log(project.title)
                 let optionCustom = document.createElement('option')
                 optionCustom.text = `${project.title}`
                 optionCustom.value = `${project.title}`
@@ -179,6 +178,7 @@ export const HomePage = {
         let formWrapper = document.createElement('div')
         formWrapper.id = 'form-wrapper'
         let form = document.createElement('form')
+        form.setAttribute('autocomplete', 'off')
         form.id = 'mini-form'
         let projectInput = document.createElement('input')
         projectInput.setAttribute('placeholder', 'Enter new project, 18 char max')
@@ -194,7 +194,6 @@ export const HomePage = {
         closeButton.id = 'close-project-form'
         buttonWrapper.append(closeButton, addButton)
         form.append(projectInput, buttonWrapper)
-        formWrapper.appendChild(form)
 
         return form
     },
@@ -249,7 +248,6 @@ export const HomePage = {
     renderToDoObject(list, containerID = 'to-do-content') {
         let toDoContainer = document.getElementById(containerID)
         toDoContainer.innerHTML = ''
-        let doneList = list.filter((obj) => obj.done)
 
         if (list.length === 0) {
             this.generatePlaceholder(containerID)
@@ -328,12 +326,6 @@ export const HomePage = {
             toDoBubble.append(nameWrapper, descripWrapper, bottomItems)
             toDoContainer.appendChild(toDoBubble)
         }
-    },
-
-    setPage(list, allProjects) {
-        this.renderToDoObject(list)
-        this.closeSideBar()
-        this.renderStickyBar()
     },
 
     generatePlaceholder(containerID = 'to-do-content') {
