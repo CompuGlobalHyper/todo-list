@@ -10,6 +10,7 @@ loadMain()
 
 function loadMain() {
     if (!document.getElementById('to-do-dialog')) createDialog()
+    if (!document.getElementById('sticky-bar')) HomePage.renderStickyBar()
     HomePage.closeSideBar()
     let pageTitle = document.getElementById('to-do-title').textContent
     sortDate(toDoList)
